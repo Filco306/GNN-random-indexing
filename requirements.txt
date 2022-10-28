@@ -1,0 +1,16 @@
+torchvision
+pytorch
+cudatoolkit=10.2
+jupyter
+jupyterlab
+seaborn
+tensorboard
+matplotlib
+wandb
+pyg
+python-dotenv
+tqdm
+scipy
+numpy
+str2bool
+torch_sparse
