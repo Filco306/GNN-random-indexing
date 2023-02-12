@@ -21,28 +21,11 @@ KWARGS = {
 }
 
 
-BEST_KWARGS_CITESEER = {
-    "dim": 1500,
-    "use_sign": False,
-    "features_as": "initialization_as_context",
-    "use_cuda": True,
-    "permute_vecs": True,
-    "use_both_one_m1": True,
-    "nnz": 2,
-    "is_directed": False,
-    "zeroth_order": 1.0,
-    "fst_order": 1.0,
-    "snd_order": 0.1,
-    "trd_order": 0.01,
-}
-
-
 class IndexVecs(BuildEmbeddingBase):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         if self.dim % 2 != 0:
             self.dim = int(self.dim - 1)
-        # Default: Permute the vectors
 
     def fit(self, nodes: np.ndarray, edges: np.ndarray, features: np.ndarray):
         if self.use_cuda is True:
