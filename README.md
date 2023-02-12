@@ -9,7 +9,7 @@ Clone the repository and change your current directory:
 git clone https://github.com/filco306/GNN-random-indexing.git
 cd GNN-random-indexing
 ```
-Install 
+Install
 ```
 pip install -r requirements.txt
 ```
@@ -26,4 +26,3 @@ bash scripts/EXPERIMENTNAME
 ## Acknowledgements
 
 This repository is a modification of the implementation of the [Optimization of Graph Neural Networks with Natural Gradient Descent](https://arxiv.org/abs/2008.09624). You might want to cite their paper too if you re-use this code :)
-

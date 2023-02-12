@@ -5,22 +5,13 @@ from torch_geometric.data import InMemoryDataset
 import torch_geometric.transforms as T
 import torch_geometric as tg
 from build_embeddings import (  # noqa: F401
-    HypDimComp,
-    HypDimCompConcat,
-    HigherOrder,
-    Contamination,
     IndexVecs,
-    PCADimRed,
     OneHotNodes,
 )
 from torch_geometric.datasets import AttributedGraphDataset
 from torch_geometric.transforms import RandomNodeSplit, RandomLinkSplit
 from typing import Tuple
 import numpy as np
-
-# from torch_geometric.utils import negative_sampling
-
-# TBD: check LinkSplit in pytorhc_geometric
 
 
 class ModifiedPlanetoidDataset(InMemoryDataset):
@@ -31,7 +22,6 @@ class ModifiedPlanetoidDataset(InMemoryDataset):
             planetoiddata.root, planetoiddata.transform, planetoiddata.pre_transform
         )
 
-        # import ipdb; ipdb.set_trace()
         self.data, self.slices = (
             tg.data.Data(
                 x=features.float(),
@@ -91,8 +81,6 @@ def get_planetoid_dataset(
     transform=None,
     split="public",
 ):
-    # pth = f"/home/users/filip/GNN-random-indexing/data/{name}"
-    # path = pth
     path = osp.join(osp.dirname(osp.realpath(__file__)), "..", "data", name)
 
     if split == "complete":

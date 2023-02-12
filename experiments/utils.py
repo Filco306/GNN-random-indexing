@@ -12,20 +12,6 @@ import scipy.stats as st
 assert load_dotenv()
 
 
-def mann_whitney_u_test(distribution_1, distribution_2):
-    """
-    Perform the Mann-Whitney U Test, comparing two different distributions.
-    Args:
-       distribution_1: List.
-       distribution_2: List.
-    Outputs:
-        u_statistic: Float. U statisitic for the test.
-        p_value: Float.
-    """
-    u_statistic, p_value = st.mannwhitneyu(distribution_1, distribution_2)
-    return u_statistic, p_value
-
-
 def calculate_confidence_interval(
     avg, dof, scale, confidence: float = 0.95
 ) -> np.ndarray:
@@ -55,7 +41,6 @@ def tabulate_events(dpath):
 
 
 def to_csv(dpath):
-    # dirs = os.listdir(dpath)
 
     d, steps = tabulate_events(dpath)
     tags, values = zip(*d.items())
@@ -99,7 +84,6 @@ def seed_everything(seed: int):
     torch.cuda.manual_seed(seed)
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
-    # torch.use_deterministic_algorithms(True)
 
 
 def cuda_is_available():

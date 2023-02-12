@@ -134,4 +134,3 @@ python3 model_linkpred.py --dataset=BlogCatalog --features_as=IndexVecs --model=
 python3 model_linkpred.py --dataset=BlogCatalog --features_as=IndexVecs --model=RILinkPredNet --params_features_as=excluded --params_dim=1500 --params_nnz=10 --depth=1 --use_sparse=True --name=RISparsemodel_linkpredDepth1WithoutFeatures;
 python3 model_linkpred.py --dataset=BlogCatalog --features_as=IndexVecs --model=RILinkPredNet --params_features_as=excluded --params_dim=1500 --params_nnz=10 --depth=2 --use_sparse=True --name=RISparsemodel_linkpredDepth2WithoutFeatures;
 python3 model_linkpred.py --dataset=BlogCatalog --features_as=IndexVecs --model=RILinkPredNet --params_features_as=excluded --params_dim=1500 --params_nnz=10 --depth=3 --use_sparse=True --name=RISparsemodel_linkpredDepth3WithoutFeatures
-

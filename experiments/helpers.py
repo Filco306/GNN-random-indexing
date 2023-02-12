@@ -21,7 +21,7 @@ def get_features_as_index_vectors(
 
     initial_index_vectors = np.zeros((n_nodes, dim))
     print(f"Generating, {nodes.shape[0]}")
-    # import ipdb; ipdb.sset_trace()
+
     for ii in range(nodes.shape[0]):
         initial_index_vectors[nodes[ii]] += (
             feature_index_vectors[feats[ii]] * features[nodes[ii], feats[ii]]

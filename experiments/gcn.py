@@ -11,6 +11,7 @@ from utils import seed_everything
 from gcn_random_index import RINet, JointRIGCN
 import wandb
 from dotenv import load_dotenv
+import os
 
 assert load_dotenv()
 
@@ -95,7 +96,7 @@ def run_experiment(args):
 
     use_wandb = args.use_wandb
     if use_wandb is True:
-        wandb.init(project="GCN-random-indexing", entity="kth-gale")
+        wandb.init(project=os.environ["WANDBPROJECT"], entity=os.environ["WANDBENTITY"])
         wandb.config.update({"Task": "Node classification"})
     for key, value in args.__dict__.items():
         print(key, value)
@@ -216,7 +217,7 @@ if __name__ == "__main__":
     parser.add_argument("--hyperparam", type=str, default=None)
     parser.add_argument("--use_cuda", type=str2bool, default=True)
     parser.add_argument("--use_sparse", type=str2bool, default=False)
-    parser.add_argument("--use_wandb", type=str2bool, default=True)
+    parser.add_argument("--use_wandb", type=str2bool, default=False)
     parser.add_argument("--model", type=str, default="Net")
     parser.add_argument(
         "--params_features_as",
@@ -229,7 +230,5 @@ if __name__ == "__main__":
     parser.add_argument("--depth", type=int, default=2)
     parser.add_argument("--name", type=str, default="Unknown")
     args = parser.parse_args()
-    import ipdb
 
-    with ipdb.launch_ipdb_on_exception():
-        run_experiment(args)
+    run_experiment(args)

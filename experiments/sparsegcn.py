@@ -13,31 +13,12 @@ from torch_geometric.utils.num_nodes import maybe_num_nodes
 import sparselinear as sl
 import torch.nn.functional as F
 
+"""
 
-"""@torch.jit._overload
-def gcn_norm(
-    edge_index,
-    edge_weight=None,
-    num_nodes=None,
-    improved=False,
-    add_self_loops=True,
-    dtype=None,
-):
-    # type: (Tensor, OptTensor, Optional[int], bool, bool, Optional[int]) -> PairTensor  # noqa
-    pass
+NOTE: This code is copied from the PyG implementation of GCNConv and modified
 
-
-@torch.jit._overload
-def gcn_norm(
-    edge_index,
-    edge_weight=None,
-    num_nodes=None,
-    improved=False,
-    add_self_loops=True,
-    dtype=None,
-):
-    # type: (SparseTensor, OptTensor, Optional[int], bool, bool, Optional[int]) -> SparseTensor  # noqa
-    pass"""
+Source for code: https://pytorch-geometric.readthedocs.io/en/latest/_modules/torch_geometric/nn/conv/gcn_conv.html#GCNConv # noqa
+"""
 
 
 def gcn_norm(
@@ -189,7 +170,7 @@ class SparseGCNConv(MessagePassing):
     def forward(
         self, x: Tensor, edge_index: Adj, edge_weight: OptTensor = None
     ) -> Tensor:
-        """"""
+
         if self.normalize:
             if isinstance(edge_index, Tensor):
                 cache = self._cached_edge_index

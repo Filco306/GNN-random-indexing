@@ -133,7 +133,6 @@ def run_linkpred(
 
             if eval_info["val loss"] < best_val_loss:
                 best_val_loss = eval_info["val loss"]
-                # val_roc = eval_info["val roc"]
                 test_roc = eval_info["test roc"]
 
             val_loss_history.append(eval_info["val loss"])

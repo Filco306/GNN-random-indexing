@@ -44,47 +44,6 @@ class IndexVecs(BuildEmbeddingBase):
             self.dim = int(self.dim - 1)
         # Default: Permute the vectors
 
-    def permute(self, vectors: torch.Tensor, step: int):
-        """ Shift everything one step. """
-        return torch.roll(vectors, step, 1)
-
-    def generate_context_vectors(self):
-        index_vectors = torch.Tensor(self.index_vectors)
-        fst_context = self.sparse_adj_mat.spmm(index_vectors)
-        snd_context = self.sparse_adj_mat_sq.spmm(
-            index_vectors
-            if self.permute_vecs is False
-            else self.permute(index_vectors, 1)
-        )
-        trd_context = self.sparse_adj_mat_3.spmm(
-            index_vectors
-            if self.permute_vecs is False
-            else self.permute(index_vectors, 2)
-        )
-        # import ipdb; ipdb.sset_trace()
-        # NOTE: We do not use scalars here because
-        # # we just want to see how good the representation is.
-        self.embedding = (
-            torch.sign(
-                self.zeroth_order * index_vectors
-                + self.fst_order * fst_context
-                + self.snd_order * snd_context
-                + self.trd_order * trd_context
-            )
-            if self.use_sign
-            else (
-                self.zeroth_order * index_vectors
-                + self.fst_order * fst_context
-                + self.snd_order * snd_context
-                + self.trd_order * trd_context
-            )
-        )
-        # Take the others randomly.
-        self.embedding[self.embedding == 0] = torch.sign(
-            torch.randn((self.embedding == 0).nonzero().shape[0])
-        )
-        self.embedding = self.embedding.long().cpu().numpy()
-
     def fit(self, nodes: np.ndarray, edges: np.ndarray, features: np.ndarray):
         if self.use_cuda is True:
             assert cuda_is_available(), "CUDA is not available."
@@ -115,13 +74,6 @@ class IndexVecs(BuildEmbeddingBase):
         )
         if self.use_both_one_m1 is False:
             self.embedding = np.abs(self.embedding)
-        # self.sparse_adj_mat = SparseTensor.from_scipy(
-        #     create_sparse_adj_mat(nodes, edges, self.is_directed)
-        # )
-        # self.sparse_adj_mat_sq = self.sparse_adj_mat.spspmm(self.sparse_adj_mat)
-        # self.sparse_adj_mat_3 = self.sparse_adj_mat_sq.spspmm(self.sparse_adj_mat)
-
-        # self.generate_context_vectors()
 
     def _transform(self, nodes: np.ndarray = None):
         return self.embedding[nodes] if nodes is not None else self.embedding

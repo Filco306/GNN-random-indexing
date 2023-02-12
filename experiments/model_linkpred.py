@@ -162,7 +162,6 @@ def run_experiment(args):
         params=featparams,
     )
 
-    # Animesh Code
     if args.model == "LinkPredNet":
         model = LinkPredNet(train, args.hidden, args.out, use_sparse=args.use_sparse)
     elif args.model == "RILinkPredNet":
@@ -175,7 +174,7 @@ def run_experiment(args):
         )
     else:
         raise ValueError(f"Model {args.model} not supported")
-    # Animesh code ends
+
     name = f"dataset_{args.dataset}|features_as_{args.features_as}|model_{model.__class__.__name__}|depth_{args.depth}"  # noqa: E501
     if use_wandb is True:
         without_features = (featparams.get("features_as", "") == "excluded") or (
@@ -233,7 +232,7 @@ if __name__ == "__main__":
     parser.add_argument("--hyperparam", type=str, default=None)
     parser.add_argument("--use_cuda", type=str2bool, default=True)
     parser.add_argument("--use_sparse", type=str2bool, default=False)
-    parser.add_argument("--use_wandb", type=str2bool, default=True)
+    parser.add_argument("--use_wandb", type=str2bool, default=False)
     parser.add_argument("--model", type=str, default="LinkPredNet")
     parser.add_argument(
         "--params_features_as",

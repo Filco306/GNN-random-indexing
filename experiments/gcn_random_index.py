@@ -126,12 +126,9 @@ class RILayer(torch.nn.Module):
 
     def forward(self, index_vectors):
 
-        # index_vectors = torch.Tensor(self.index_vectors)
-
         fst_context = (
             self.sparse_adj_mat.spmm(index_vectors) if (self.depth >= 1) else 0.0
         )
-        # import ipdb; ipdb.sset_trace()
         if self.depth >= 2:
             snd_context = self.sparse_adj_mat_sq.spmm(
                 index_vectors
@@ -149,9 +146,6 @@ class RILayer(torch.nn.Module):
             )
         else:
             trd_context = 0.0
-        # import ipdb; ipdb.sset_trace()
-        # NOTE: We do not use scalars here because
-        # we just want to see how good the representation is.
         zeroth, fst, snd, trd = self.get_orders()
         embedding = (
             torch.sign(
@@ -295,12 +289,9 @@ class RICRD(torch.nn.Module):
 
     def generate_context_vectors(self, index_vectors, edges):
 
-        # index_vectors = torch.Tensor(self.index_vectors)
-
         fst_context = (
             self.sparse_adj_mat.spmm(index_vectors) if (self.depth >= 1) else 0.0
         )
-        # import ipdb; ipdb.sset_trace()
         if self.depth >= 2:
             snd_context = self.sparse_adj_mat_sq.spmm(
                 index_vectors
@@ -318,7 +309,6 @@ class RICRD(torch.nn.Module):
             )
         else:
             trd_context = 0.0
-        # import ipdb; ipdb.sset_trace()
         # NOTE: We do not use scalars here because
         # we just want to see how good the representation is.
         zeroth, fst, snd, trd = self.get_orders()
@@ -341,7 +331,6 @@ class RICRD(torch.nn.Module):
 
     def forward(self, x, edge_index, mask=None, x_features=None):
         x = self.generate_context_vectors(x, edge_index)
-        # import ipdb; ipdb.sset_trace()
         if x_features is not None:
             x = torch.cat([x, x_features], dim=1)
         x = F.relu(self.conv(x, edge_index))
@@ -353,9 +342,6 @@ class RICLS(torch.nn.Module):
     def __init__(self, d_in, d_out, use_sparse: bool = False):
         super(RICLS, self).__init__()
         self.conv = GCNConv(d_in, d_out, cached=True)
-        # if use_sparse is False
-        # else SparseGCNConv(d_in, d_out, cached=True)
-        # )
 
     def reset_parameters(self):
         self.conv.reset_parameters()
@@ -381,7 +367,6 @@ class RINet(torch.nn.Module):
     ):
         super(RINet, self).__init__()
 
-        # import ipdb; ipdb.sset_trace()
         try:
             num_classes = dataset.num_classes
         except AttributeError:

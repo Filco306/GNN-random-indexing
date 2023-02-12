@@ -80,7 +80,6 @@ def build_context_vectors_random_walks(
     else:
         assert n_restarts is not None
         index_vectors = create_index_vectors(n_nodes, dim, nnz, use_both_one_m1=True)
-        # index_vectors = index_vectors_nodes.cpu().to_dense().repeat(n_restarts, 1).to_sparse()
 
     context_vectors = torch.zeros(n_nodes, dim).to(device)
     index_vecs_tsp = SparseTensor.from_torch_sparse_coo_tensor(index_vectors).to(device)
